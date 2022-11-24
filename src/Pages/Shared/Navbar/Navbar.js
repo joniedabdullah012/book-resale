@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo1 from '../../../Assest/logo1.jpg'
+import logo2 from '../../../Assest/logo2.jpg'
 
 const Navbar = () => {
 
@@ -27,8 +27,12 @@ const Navbar = () => {
                     </ul>
                 </div>
 
-                <img className='w-16' alt='/' src={logo1}></img>
-                <Link to='/home' className="btn btn-ghost normal-case  text-blue-700 text-2xl">Book Resale</Link>
+
+                <Link to='/' className="btn btn-ghost normal-case  text-blue-700 text-2xl">
+                    <img className='w-16' alt='/' src={logo2}></img>
+
+
+                    Book Resale</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
