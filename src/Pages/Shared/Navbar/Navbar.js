@@ -16,9 +16,18 @@ const Navbar = () => {
     const menuItems = <>
         <li><Link className='text-blue-600' to='/'>Home</Link></li>
 
-        {user?.uid ? <li><button onClick={handleLogOut} className='text-blue-600' to='/login'>Sign Out</button></li>
-            :
-            <li><Link className='text-blue-600' to='/login'>Log In</Link></li>
+        {
+
+            user?.uid ?
+                <>
+                    <li><Link className='text-blue-600' to='/dashboard'>DashBoard</Link></li>
+
+                    <li><button onClick={handleLogOut} className='text-blue-600' to='/login'>Sign Out</button></li>
+
+
+                </>
+                :
+                <li><Link className='text-blue-600' to='/login'>Log In</Link></li>
 
 
 
