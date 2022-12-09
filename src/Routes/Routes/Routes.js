@@ -1,7 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../../Layout/Main";
 import Blog from "../../Pages/Blog/Blog";
+import Catagorys from "../../Pages/Catagory/Catagorys";
 import DashBoard from "../../Pages/DashBoard/DashBoard/DashBoard";
+import BookCatagorie from "../../Pages/Home/BookCatagories/BookCatagorie";
+import BookCatagories from "../../Pages/Home/BookCatagories/BookCatagories";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import SignUp from "../../Pages/signup/SignUp";
@@ -32,6 +35,29 @@ export const router = createBrowserRouter([
 
                 path: '/signup',
                 element: <SignUp></SignUp>
+            },
+
+
+
+            {
+                path: '/bookCatagoriesId/:id',
+                element: <Catagorys></Catagorys>,
+                loader: ({ params }) => fetch(`http://localhost:5000/bookCatagoriesId/${params.id}`)
+
+
+
+
+
+
+            },
+            {
+                path: '/bookCatagoriesId',
+                element: <Catagorys></Catagorys>
+
+
+
+
+
             },
 
         ]
