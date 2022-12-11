@@ -14,6 +14,9 @@ const Home = () => {
 
             <Banner></Banner>
 
+            <p className='text-4xl font text-white rounded-xl border- p-5 bg-primary font-bold text-lg my-10 text-center'>Book Catagory</p>
+
+
             <BookCatagories></BookCatagories>
 
 

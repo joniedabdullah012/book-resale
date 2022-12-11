@@ -31,6 +31,7 @@ const BookCatagories = () => {
         <div className='grid lg:grid-cols-2 md:grid-cols- gap-4  my-8'>
 
 
+
             {
                 catagories.map(catagorie => <BookCatagorie
                     key={catagorie._id}
@@ -43,16 +44,7 @@ const BookCatagories = () => {
 
             }
 
-            {/* {
-                catagoriesId.map(catagoriId => <BookCatagorie
-                    key={catagoriId._id}
-                    catagoriId={catagoriId}
 
-                >
-
-
-                </BookCatagorie>)
-            } */}
 
 
 
