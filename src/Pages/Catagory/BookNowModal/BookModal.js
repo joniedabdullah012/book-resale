@@ -1,8 +1,12 @@
 import React from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../../Context/AuthProvider';
 
 const BookModal = ({ booksModal, setBooksModal }) => {
 
     const { name, resale_price, title, } = booksModal;
+    const { user } = useContext(AuthContext)
+    console.log(user);
 
 
     const handleBooking = event => {
@@ -10,7 +14,7 @@ const BookModal = ({ booksModal, setBooksModal }) => {
         event.preventDefault();
 
         const form = event.target;
-        const name = form.name.value;
+        const cusTomername = form.name.value;
         const email = form.email.value;
         const location = form.location.value;
         const phone = form.phone.value;
@@ -18,10 +22,11 @@ const BookModal = ({ booksModal, setBooksModal }) => {
         const booking = {
 
             bookName: name,
-            name,
+            cusTomername,
             email,
             location,
             phone,
+            resale_price
 
         }
         console.log(booking);
@@ -45,8 +50,8 @@ const BookModal = ({ booksModal, setBooksModal }) => {
                     <form onSubmit={handleBooking} className='grid grid-cols-1 gap-4 mt-5' >
                         <input name="bookname" type="text" value={name} readOnly placeholder="Type here" className="input input-bordered" />
                         <input type="text" value={resale_price} placeholder="Type here" className="input input-bordered" />
-                        <input name="name" type="name" placeholder="Your Name" className="input input-bordered" />
-                        <input name="email" type="email" placeholder="Email" className="input input-bordered" />
+                        <input name="name" defaultValue={user?.displayName} disabled type="name" placeholder="Your Name" className="input input-bordered" />
+                        <input name="email" defaultValue={user?.email} type="email" placeholder="Email" className="input input-bordered" disabled />
                         <input name="phone" type="text" placeholder="Phone" className="input input-bordered" />
                         <input name="location" type="text" placeholder="Location" className="input input-bordered" />
                         <input className='btn btn-primary w-full ' type="submit" value="Submit" />
