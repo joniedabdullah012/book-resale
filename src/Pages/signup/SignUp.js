@@ -18,7 +18,7 @@ const SignUp = () => {
                 console.log(user);
                 toast.success('user create successfully')
                 const userInfo = {
-                    disoplayName: data.name
+                    displayName: data.name
 
                 }
                 updateUser(userInfo)
