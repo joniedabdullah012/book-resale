@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useContext } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../../Context/AuthProvider';
 
 const MyOrders = () => {
@@ -9,12 +10,17 @@ const MyOrders = () => {
 
 
 
+
     const url = `http://localhost:5000/bookings?email=${user?.email}`
 
     const { data: bookings = [] } = useQuery({
         queryKey: ['bookings', user?.email],
         queryFn: async () => {
-            const res = await fetch(url)
+            const res = await fetch(url, {
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
             const data = await res.json()
             return data;
 
@@ -40,7 +46,7 @@ const MyOrders = () => {
 
                         {
                             bookings.map((booking, i) =>
-                                <tr className="hover">
+                                <tr key={booking._id} className="hover">
 
                                     <th>{i + 1}</th>
                                     <th><div className="mask mask-squircle w-12 h-12">

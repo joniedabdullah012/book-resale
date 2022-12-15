@@ -6,9 +6,6 @@ const BookCatagorie = ({ catagorie }) => {
     const { name, _id,
         category_id, category
     } = catagorie;
-    console.log(name, _id,
-        category_id, category
-    );
 
 
 

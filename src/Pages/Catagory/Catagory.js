@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { faCircleCheck, facircle } from '@fortawesome/free-regular-svg-icons';
 import BookModal from './BookNowModal/BookModal';
+import MyOrders from '../DashBoard/MyOrders/MyOrders';
 
 
 
@@ -41,6 +42,9 @@ const Catagory = ({ book, setBooksModal, booksModal }) => {
                     </div>
                 </div>
             </div>
+
+
+
 
 
 
