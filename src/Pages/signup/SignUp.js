@@ -32,7 +32,7 @@ const SignUp = () => {
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        saveUser(data.name, data.email)
+                        saveSeller(data.name, data.email)
 
 
 
@@ -47,9 +47,9 @@ const SignUp = () => {
             })
     }
 
-    const saveUser = (name, email) => {
+    const saveSeller = (name, email) => {
         const user = { name, email }
-        fetch('http://localhost:5000/users', {
+        fetch('http://localhost:5000/seller', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -61,7 +61,9 @@ const SignUp = () => {
             .then(data => {
                 setCreateUserEmail(email)
 
-                // console.log('save user', data)
+
+                // console.log('save seller', data)
+
 
 
             })

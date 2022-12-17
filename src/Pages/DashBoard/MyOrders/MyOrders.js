@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useContext } from 'react';
-import { useLoaderData } from 'react-router-dom';
+
 import { AuthContext } from '../../../Context/AuthProvider';
 
 const MyOrders = () => {
@@ -18,13 +18,16 @@ const MyOrders = () => {
         queryFn: async () => {
             const res = await fetch(url, {
                 headers: {
-                    authorization: `bearer ${localStorage.getItem('accessToken')}`
-                }
-            })
-            const data = await res.json()
-            return data;
 
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+
+                }
+
+            });
+            const data = await res.json();
+            return data;
         }
+
     })
     return (
         <div>
@@ -47,16 +50,13 @@ const MyOrders = () => {
                         {
                             bookings.map((booking, i) =>
                                 <tr key={booking._id} className="hover">
-
-                                    <th>{i + 1}</th>
-                                    <th><div className="mask mask-squircle w-12 h-12">
+                                    <th>{i + 1}</th>                                   <th><div className="mask mask-squircle w-12 h-12">
                                         <img src={bookings.photoURL} alt='' />
                                     </div></th>
 
                                     <td>{booking.bookName}</td>
                                     <td>{booking.resale_price}</td>
-                                    <td>Blue</td>
-                                </tr>
+                                    <td>Blue</td>                               </tr>
 
 
                             )

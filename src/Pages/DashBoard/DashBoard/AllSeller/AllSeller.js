@@ -4,9 +4,9 @@ import { toast } from 'react-hot-toast';
 
 const AllSeller = () => {
     const { data: users = [], refetch } = useQuery({
-        queryKey: ['users'],
+        queryKey: ['seller'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users')
+            const res = await fetch('http://localhost:5000/seller')
             const data = await res.json();
             return data;
 
@@ -16,8 +16,8 @@ const AllSeller = () => {
 
     });
 
-    const handleVerify = id => {
-        fetch(`http://localhost:5000/users/verify/${id}`, {
+    const handleMakeAdmin = id => {
+        fetch(`http://localhost:5000/seller/admin/${id}`, {
             method: 'PUT',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -25,6 +25,7 @@ const AllSeller = () => {
         })
             .then(res => res.json())
             .then(data => {
+                console.log(data);
 
                 if (data.modifiedCount > 0) {
 
@@ -34,6 +35,7 @@ const AllSeller = () => {
 
             })
     }
+
     return (
         <div>
             <h2>All seller</h2>
@@ -55,7 +57,12 @@ const AllSeller = () => {
                                 <th>{i + 1}</th>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                <td>{user?.role !== 'verify' && <button onClick={() => handleVerify(user._id)} className='btn btn-primary btn-xs'>Verify seller</button>}</td>
+                                <td>{
+                                    user?.role !== 'admin' &&
+
+                                    <button onClick={() => handleMakeAdmin(user._id)} className='btn btn-primary btn-xs'>Verify seller</button>
+
+                                }</td>
                                 <td><button className='btn btn-danger btn-xs'>Delete</button></td>
                             </tr>
 
