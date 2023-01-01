@@ -1,17 +1,20 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const AddProducts = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const imagehostkey = process.env.REACT_APP_imgbb_key;
+    const navigate = useNavigate()
 
     const handleAddProduct = (data) => {
 
         const image = data.img[0];
         const formData = new FormData();
         formData.append('image', image);
-        const url = `https://api.imgbb.com/1/upload?expiration=600&key=${imagehostkey}`
+        const url = `https://api.imgbb.com/1/upload?key=${imagehostkey}`
 
         fetch(url, {
 
@@ -23,6 +26,41 @@ const AddProducts = () => {
             .then(imgData => {
                 if (imgData.success) {
                     console.log(imgData.data.url);
+
+
+                    const products = {
+                        name: data.name,
+                        price: data.price,
+                        phone: data.phone,
+                        location: data.location,
+                        condition: data.condition,
+                        description: data.description,
+                        image: imgData.data.url
+
+
+
+
+
+                    }
+
+                    // save products
+                    fetch('http://localhost:5000/products', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                            authorization: `bearer ${localStorage.getItem('accessToken')}`
+                        },
+                        body: JSON.stringify(products)
+
+
+                    })
+
+                        .then(res => res.json())
+                        .then(result => {
+                            console.log(result)
+                            toast.success(`${data.name} is added successfully`)
+                            navigate('/dashboard/myproducts')
+                        })
                 }
             })
 

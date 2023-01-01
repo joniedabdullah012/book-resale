@@ -9,6 +9,7 @@ import AllSeller from "../../Pages/DashBoard/DashBoard/AllSeller/AllSeller";
 import DashBoard from "../../Pages/DashBoard/DashBoard/DashBoard";
 import MyBuyer from "../../Pages/DashBoard/MyBuyer/MyBuyer";
 import MyOrders from "../../Pages/DashBoard/MyOrders/MyOrders";
+import MyProducts from "../../Pages/DashBoard/MyProducts";
 import BookCatagorie from "../../Pages/Home/BookCatagories/BookCatagorie";
 import BookCatagories from "../../Pages/Home/BookCatagories/BookCatagories";
 import Home from "../../Pages/Home/Home/Home";
@@ -90,6 +91,14 @@ export const router = createBrowserRouter([
                 path: '/dashboard/allbuyer',
                 element: <AdminRoute><AllBuyer></AllBuyer>
                 </AdminRoute>
+            },
+            {
+                path: '/dashboard/addproducts',
+                element: <SellerRoute><AddProducts></AddProducts></SellerRoute>
+            },
+            {
+                path: '/dashboard/myproducts',
+                element: <SellerRoute><MyProducts></MyProducts></SellerRoute>
             },
             {
                 path: '/dashboard/addproducts',
