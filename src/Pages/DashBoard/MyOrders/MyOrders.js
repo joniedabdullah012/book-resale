@@ -42,13 +42,14 @@ const MyOrders = () => {
                             <th>image</th>
                             <th>Title</th>
                             <th>Price</th>
-                            <th>Favorite Color</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
 
                         {
-                            bookings.map((booking, i) =>
+                            bookings &&
+                            bookings?.map((booking, i) =>
                                 <tr key={booking._id} className="hover">
                                     <th>{i + 1}</th>                                   <th><div className="mask mask-squircle w-12 h-12">
                                         <img src={bookings.photoURL} alt='' />
@@ -56,7 +57,7 @@ const MyOrders = () => {
 
                                     <td>{booking.bookName}</td>
                                     <td>{booking.resale_price}</td>
-                                    <td>Blue</td>                               </tr>
+                                    <td><button className='btn btn-xs'>Delete</button></td>                               </tr>
 
 
                             )

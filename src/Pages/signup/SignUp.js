@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
 import useToken from '../../Hook/UseToken';
 
+
 const SignUp = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -22,6 +23,7 @@ const SignUp = () => {
     const handleSignUp = data => {
         setSignUpError('')
         createUser(data.email, data.password)
+            // console.log(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
@@ -32,12 +34,12 @@ const SignUp = () => {
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        saveSeller(data.name, data.email)
+                        saveUser(data.name, data.email)
 
 
 
                     })
-                    .then(err => console.log(err))
+                    .catch(err => console.log(err))
 
             })
             .catch(error => {
@@ -47,9 +49,9 @@ const SignUp = () => {
             })
     }
 
-    const saveSeller = (name, email) => {
+    const saveUser = (name, email) => {
         const user = { name, email }
-        fetch('http://localhost:5000/seller', {
+        fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -62,13 +64,13 @@ const SignUp = () => {
                 setCreateUserEmail(email)
 
 
-                // console.log('save seller', data)
-
 
 
             })
 
     }
+
+
 
 
     return (
@@ -108,6 +110,23 @@ const SignUp = () => {
                         </label>
                         <input className="input input-bordered w-full max-w-xs" type="password" {...register("password", { required: "password is required" })} />
                         {errors.password && <p className="text-red-600">{errors.password?.message}</p>}
+
+
+
+
+                    </div>
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label">
+                            <span className="label-text">Select</span>
+
+
+                        </label>
+                        <select className="select select-bordered w-full max-w-xs">
+                            <option >Buyer</option>
+                            <option>Seller</option>
+
+                        </select>
+
 
 
 

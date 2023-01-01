@@ -4,9 +4,9 @@ import { toast } from 'react-hot-toast';
 
 const AllSeller = () => {
     const { data: users = [], refetch } = useQuery({
-        queryKey: ['seller'],
+        queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/seller')
+            const res = await fetch('http://localhost:5000/users')
             const data = await res.json();
             return data;
 
@@ -17,7 +17,7 @@ const AllSeller = () => {
     });
 
     const handleMakeAdmin = id => {
-        fetch(`http://localhost:5000/seller/admin/${id}`, {
+        fetch(`http://localhost:5000/users/admin/${id}`, {
             method: 'PUT',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -29,7 +29,7 @@ const AllSeller = () => {
 
                 if (data.modifiedCount > 0) {
 
-                    toast.success(' verify successfully')
+                    toast.success(' seller successfully')
                     refetch();
                 }
 
@@ -60,7 +60,7 @@ const AllSeller = () => {
                                 <td>{
                                     user?.role !== 'admin' &&
 
-                                    <button onClick={() => handleMakeAdmin(user._id)} className='btn btn-primary btn-xs'>Verify seller</button>
+                                    <button onClick={() => handleMakeAdmin(user._id)} className='btn btn-primary btn-xs'>Make Admin</button>
 
                                 }</td>
                                 <td><button className='btn btn-danger btn-xs'>Delete</button></td>
