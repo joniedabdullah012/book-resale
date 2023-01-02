@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useState } from 'react';
+import { toast } from 'react-hot-toast';
 import ConfirmationModal from '../Shared/ConfirmationModal/ConfirmationModal';
 
 const MyProducts = () => {
@@ -11,11 +12,8 @@ const MyProducts = () => {
         setDeleteProduct(null);
     }
 
-    const handleDelete = (product) => {
-        console.log(product);
 
-    }
-    const { data: products, isLoading } = useQuery({
+    const { data: products, isLoading, refetch } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
             try {
@@ -33,7 +31,27 @@ const MyProducts = () => {
 
             }
         }
-    })
+    });
+
+    const handleDelete = (product) => {
+        console.log(product);
+        fetch(`http://localhost:5000/products/${product._id}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    toast.success('Delete Successfully')
+
+                }
+                refetch()
+            })
+
+    }
 
     if (isLoading) {
         return <progress className="progress w-56"></progress>
