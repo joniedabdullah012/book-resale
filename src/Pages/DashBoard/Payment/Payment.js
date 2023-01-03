@@ -9,9 +9,11 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 console.log(stripePromise);
 
 
+
+
 const Payment = () => {
     const booking = useLoaderData();
-    console.log('booking dat', booking);
+
     return (
         <div>
             <h1 className='text-3xl p-3'>payment for<span className='text-2xl  text-blue-500'> {booking.bookName} </span></h1>
@@ -20,7 +22,9 @@ const Payment = () => {
 
             <div className='w-96 my-12'>
                 <Elements stripe={stripePromise}>
-                    <CheckOutForm />
+                    <CheckOutForm
+                        booking={booking}
+                    />
                 </Elements>
             </div>
         </div>

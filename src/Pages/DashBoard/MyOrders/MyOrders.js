@@ -67,7 +67,7 @@ const MyOrders = () => {
                                         {
 
                                             booking.resale_price && booking.paid &&
-                                            <span>paid</span>}
+                                            <span className='font-bold text-green-600'>paid</span>}
 
                                     </td>
                                 </tr>
