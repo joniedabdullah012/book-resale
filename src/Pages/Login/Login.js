@@ -1,3 +1,4 @@
+import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext } from 'react';
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -8,6 +9,8 @@ import useToken from '../../Hook/UseToken';
 
 
 const Login = () => {
+
+    const { providerLogin } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { signIn } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
@@ -38,6 +41,20 @@ const Login = () => {
 
             })
 
+
+    }
+
+    const googgleProvider = new GoogleAuthProvider()
+
+    const handleGoogleSignIn = () => {
+        providerLogin(googgleProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+
+            })
+
+            .catch(error => console.error(error))
 
     }
 
@@ -94,7 +111,7 @@ const Login = () => {
                 <p className='my-3'>New to book sale <Link className='text-primary' to='/signup'>create new account</Link></p>
                 <div className="divider">OR</div>
 
-                <button className='text-center btn btn-outline w-full p-3 rounded-xl'>CONTINUE WITH GOOGLE</button>
+                <button onClick={handleGoogleSignIn} className='text-center btn btn-outline w-full p-3 rounded-xl'>CONTINUE WITH GOOGLE</button>
 
 
 

@@ -1,3 +1,4 @@
+import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -8,8 +9,9 @@ import useToken from '../../Hook/UseToken';
 
 const SignUp = () => {
 
+
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUser, updateUser } = useContext(AuthContext)
+    const { createUser, updateUser, providerLogin } = useContext(AuthContext)
     const [signUpError, setSignUpError] = useState('');
     const [createUserEmail, setCreateUserEmail] = useState('')
 
@@ -22,7 +24,7 @@ const SignUp = () => {
     }
     const handleSignUp = data => {
         setSignUpError('')
-        createUser(data.email, data.password)
+        createUser(data.email, data.password, data.role)
             // console.log(data.email, data.password)
             .then(result => {
                 const user = result.user;
@@ -34,7 +36,7 @@ const SignUp = () => {
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        saveUser(data.name, data.email)
+                        saveUser(data.name, data.email, data.role)
 
 
 
@@ -49,8 +51,10 @@ const SignUp = () => {
             })
     }
 
-    const saveUser = (name, email) => {
-        const user = { name, email }
+
+
+    const saveUser = (name, email, role) => {
+        const user = { name, email, role }
         fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
@@ -67,6 +71,21 @@ const SignUp = () => {
 
 
             })
+
+
+    }
+
+    const googgleProvider = new GoogleAuthProvider()
+
+    const handleGoogleSignIn = () => {
+        providerLogin(googgleProvider)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+
+            })
+
+            .catch(error => console.error(error))
 
     }
 
@@ -121,17 +140,11 @@ const SignUp = () => {
 
 
                         </label>
-                        <select className="select select-bordered w-full max-w-xs">
+                        <select {...register("role")} className="select select-bordered w-full max-w-xs">
                             <option >Buyer</option>
-                            <option>Seller</option>
+                            <option  >seller</option>
 
-                        </select>
-
-
-
-
-
-                    </div>
+                        </select> </div>
 
 
 
@@ -144,13 +157,13 @@ const SignUp = () => {
                 <p className='my-3'>Already have a account? <Link className='text-primary' to='/login'>Please log in</Link></p>
                 <div className="divider">OR</div>
 
-                <button className='text-center btn btn-outline w-full p-3 rounded-xl'>CONTINUE WITH GOOGLE</button>
+                <button onClick={handleGoogleSignIn} className='text-center btn btn-outline w-full p-3 rounded-xl'>CONTINUE WITH GOOGLE</button>
 
 
 
-            </div>
+            </div >
 
-        </div>
+        </div >
     );
 };
 

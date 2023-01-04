@@ -1,12 +1,17 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 const AllSeller = () => {
-    const { data: users = [], refetch } = useQuery({
-        queryKey: ['users'],
+
+
+    const { data: seller = [], refetch } = useQuery({
+        queryKey: ['seller'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users')
+            const res = await fetch('http://localhost:5000/seller')
             const data = await res.json();
             return data;
 
@@ -15,6 +20,8 @@ const AllSeller = () => {
         }
 
     });
+
+
 
     const handleMakeAdmin = id => {
         fetch(`http://localhost:5000/users/admin/${id}`, {
@@ -29,12 +36,34 @@ const AllSeller = () => {
 
                 if (data.modifiedCount > 0) {
 
-                    toast.success(' seller successfully')
+                    toast.success(' seller verify successfully')
                     refetch();
                 }
 
             })
     }
+
+
+    const handleDelete = (id) => {
+
+        fetch(`http://localhost:5000/users/admin/${id}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    toast.success('Delete Successfully')
+
+                }
+                refetch()
+            })
+
+    }
+
 
     return (
         <div>
@@ -53,17 +82,26 @@ const AllSeller = () => {
                     </thead>
                     <tbody>
                         {
-                            users.map((user, i) => <tr key={user._id}>
+                            seller.map((user, i) => <tr key={user._id}>
                                 <th>{i + 1}</th>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td>{
                                     user?.role !== 'admin' &&
 
-                                    <button onClick={() => handleMakeAdmin(user._id)} className='btn btn-primary btn-xs'>Make Admin</button>
+                                    <button onClick={() => handleMakeAdmin(user._id)} className='btn btn-primary btn-xs'>Make Admin seller verify</button>
 
-                                }</td>
-                                <td><button className='btn btn-danger btn-xs'>Delete</button></td>
+                                }
+
+                                    {
+                                        user?.role === 'admin' &&
+
+                                        <FontAwesomeIcon icon={faCheckCircle} />
+                                    }
+
+
+                                </td>
+                                <td><button onClick={() => handleDelete(user._id)} className='btn btn-danger btn-xs'>Delete</button></td>
                             </tr>
 
                             )

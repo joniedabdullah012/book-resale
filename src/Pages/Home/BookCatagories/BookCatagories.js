@@ -28,7 +28,7 @@ const BookCatagories = () => {
 
 
     return (
-        <div className='grid lg:grid-cols-2 md:grid-cols- gap-4  my-8'>
+        <div className='grid lg:grid-cols-2 md:grid-cols-1 p-10 gap-10 rounded-3xl '>
 
 
 
